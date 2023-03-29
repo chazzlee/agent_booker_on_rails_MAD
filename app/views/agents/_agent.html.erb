@@ -1,0 +1,18 @@
+<li class="flex flex-row items-center justify-between w-full p-4 my-2 shadow-md card bg-base-100 hover:bg-gray-100 hover:transition-colors">
+  <div>
+    <div class="flex items-center mb-2 text-lg font-medium">
+      <p class="mr-2"><%= agent.name %></p>
+      <p class="text-sm text-gray-400">(<%= agent.timezone.short_name.gsub("_", " ") %>)</p>
+    </div>
+    <p class="inline-flex items-center text-gray-700 text-md">
+      <span class="mr-2">Days available:</span> <% agent.available_days.each do |day| %>
+        <span class="mr-1 badge badge-accent badge-md"><%= day %></span>
+      <% end %>
+    </p>
+  </div>
+  <div class="avatar">
+    <div class="w-20 rounded">
+      <img src="<%= agent.get_avatar %>" alt="<%= agent.name %>">
+    </div>
+  </div>
+</li>

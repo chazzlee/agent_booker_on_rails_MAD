@@ -1,0 +1,42 @@
+<section class="w-3/4 py-8">
+  <div class="py-4">
+    <%= link_to "Back to agents", agents_path, class: "btn btn-sm btn-accent" %>
+  </div>
+  <h1 class="mb-4 text-2xl">Agent: <span class="font-medium"><%= agent.name %></span></h1>
+
+  <ul class="sticky top-0 z-10 flex flex-row gap-4 px-2 py-8 mb-4 rounded-lg shadow-md bg-base-100">
+    <% agent.available_days.each do |day| %>
+      <li class="py-4 text-xl font-medium badge badge-accent badge-lg hover:shadow-md hover:transition-shadow">
+        <%= link_to day, "##{day}" %>
+      </li>
+    <% end %>
+  </ul>
+
+  <ul class="flex flex-col flex-wrap">
+    <% agent.availabilities_grouped_by_day.each do |day_of_week, avs| %>
+      <%= render partial: "availabilities/availability", locals: {agent:, day_of_week:, avs:} %>
+    <% end %>
+  </ul>
+</section>
+
+<% content_for :reservation_modal do %>
+  <%= render partial: "appointments/form", locals: {agent:} %>
+<% end %>
+
+<script>
+  document.querySelectorAll(".reservation-btn").forEach((element) => {
+    element.addEventListener("click", (e) => {
+      // Prepopulate appointment modal
+      let id = +e.target.dataset.avId;
+      let availability = {};
+      document.querySelectorAll(`[data-id="${id}"]`).forEach((element) => {
+        availability[element.id] = element.innerText;
+      });
+
+      Object.keys(availability).forEach((key) => {
+        document.getElementById(`appointment-${key}`).value = availability[key];
+      });
+      document.getElementById("availability_id").value = id;
+    });
+  });
+</script>

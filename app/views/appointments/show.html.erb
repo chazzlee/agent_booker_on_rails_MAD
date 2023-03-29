@@ -1,0 +1,11 @@
+<section class="flex flex-col items-center justify-center pt-48">
+  <div class="mb-4">
+    <%= link_to "Back to home", root_url, class: "btn btn-sm btn-accent" %>
+  </div>
+  <% if flash[:notice].present? %>
+    <div class="h-48 p-4 text-center shadow-md card w-96 bg-base-100">
+      <h1 class="py-2 text-xl text-primary">Your reservation has been made!</h1>
+      <p class="leading-8"><%= flash[:notice] %></p>
+    </div>
+  <% end %>
+</section>

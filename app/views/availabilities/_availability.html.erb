@@ -1,0 +1,34 @@
+<li class="py-4" id="<%= day_of_week %>">
+  <h3 class="pt-4 pb-8 text-2xl font-semibold">
+    <%= day_of_week %>
+  </h3>
+
+  <ul class="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+    <% avs.each do |av| %>
+      <span class="hidden" id="day" data-id="<%= av.id %>"><%= av.day_of_week %></span>
+
+      <li class="p-4 text-sm shadow-md card bg-base-100 hover:shadow-lg hover:transition-shadow <%= av.reserved? ? "text-gray-300" : "text-gray-800" %>">
+        <div class="mb-2 text-lg font-semibold user-time <%= av.reserved? ? "text-gray-300" : "text-primary" %>">
+          <time><%= local_time(av.start_at, -5) %></time>
+          <span>-</span>
+          <time><%= local_time(av.end_until, -5) %></time>
+          <span class="text-xs">(EDT)</span>
+        </div>
+
+        <div class="mb-2 font-medium agent-time">
+          <time data-id="<%= av.id %>" id="start">
+            <%= local_time(av.start_at, agent.timezone.offset.to_i) %>
+          </time>
+          <span>-</span>
+          <time data-id="<%= av.id %>" id="end"><%= local_time(av.end_until, agent.timezone.offset.to_i) %></time>
+          <span class="text-xs truncate">(<%= agent.timezone.short_name.gsub("_", " ") %>)</span>
+        </div>
+
+        <label for="reservation-modal" data-av-id="<%= av.id %>" class="mt-2 reservation-btn btn btn-sm btn-secondary <%= av.reserved? ? "disabled" : "" %> " role="button">
+          Reserve
+        </label>
+
+      </li>
+    <% end %>
+  </ul>
+</li>
