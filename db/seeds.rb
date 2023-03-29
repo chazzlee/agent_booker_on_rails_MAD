@@ -5,6 +5,7 @@ puts "Seeding started..."
 strip_offset_regex = /\([^)]+\)\s*(.+)/
 
 filename = "RORP1D.csv"
+
 CSV.foreach(Rails.root.join("lib", "data", filename), headers: true) do |row|
   agent_row = row.to_hash
 
